@@ -1,0 +1,89 @@
+﻿<Window x:Class="M004.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:M004"
+        Title="MainWindow" Height="450" Width="800"
+		Topmost="True"
+		WindowStartupLocation="CenterScreen">
+	<Window.Resources>
+		<local:ScoreToGradeConverter x:Key="SGC"/>
+		<local:ScoreToColorConverter x:Key="SCC"/>
+	</Window.Resources>
+    <StackPanel Margin="10">
+		<!--Binding-->
+		<!--Synchronisation zw. zwei GUI-Komponenten-->
+		<!--Wenn sich einer der beiden Werte ändert, ändert sich der andere Wert mit-->
+		<!--Bindings können nur zw. DependencyProperties durchgeführt werden-->
+		
+		<!--Aufgabe: Slider an TextBlock binden-->
+		<!--WICHTIG: Bindings müssen immer am Ziel definiert werden-->
+		<TextBlock>
+			<TextBlock.Text>
+				<!--Bindings zw. zwei GUI benötigen immer ElementName und Path-->
+				<!--ElementName: Name der zu bindenden Komponente-->
+				<!--Path: Pfad zum DependencyProperty, welches gebunden werden soll-->
+				<Binding ElementName="TBSlider" Path="Value"/>
+			</TextBlock.Text>
+		</TextBlock>
+
+		<!--Kurzform per Markup Extension-->
+		<TextBlock Text="{Binding ElementName=TBSlider, Path=Value}"/>
+
+		<Slider Minimum="0" Maximum="100" Name="TBSlider"/> <!--Die zu bindende Komponente muss einen Namen haben-->
+		
+		<!--Mode-->
+		<!--Richtung des Bindings-->
+		<!--OneWay: Quelle zu Ziel-->
+		<!--OneWayToSource: Ziel zu Quelle-->
+		
+		<!--UpdateSourceTrigger-->
+		<!--Bestimmt, wann das Binding durchgeführt wird-->
+		<!--LostFocus: Wenn das Element verlassen wird-->
+		<!--PropertyChanged: Wenn das Element seinen Wert verändert-->
+		<!--Explicit: Binding muss über C#-Code im Backend durchgeführt werden-->
+		<TextBox Text="{Binding ElementName=TB2Slider, Path=Value}" Name="Eingabe"/>
+		<Slider Minimum="0" Maximum="100" Name="TB2Slider"/>
+		<Button Click="Button_Click" Content="Update Slider"/> <!--Explicit Binding-->
+
+		<!--StringFormat-->
+		<!--Darstellung des Wertes anpassen-->
+		<!--\ am Anfang um den Syntaxfehler zu entfernen-->
+		<TextBlock Text="{Binding ElementName=TBSlider, Path=Value, StringFormat='Summe: {0:F2}€'}"/>
+		
+		<!--Converter-->
+		<!--Bei einem Binding C#-Code anhängen-->
+		
+		<!--Beispiel: Schulnoten darstellen-->
+		<!--2 Converter: Text, Hintergrundfarbe-->
+		<Slider Minimum="0" Maximum="100" Name="ScoreSlider"/>
+		<TextBlock Text="{Binding ElementName=ScoreSlider, Path=Value, Converter={StaticResource SGC}}"
+				   Foreground="{Binding ElementName=ScoreSlider, Path=Value, Converter={StaticResource SCC}}"
+				   FontSize="30"/> <!--Siehe Window.Resources-->
+		
+		<!--MultiBinding-->
+		<!--Binding mit mehreren Quellen und einem Ziel-->
+		<Slider Minimum="0" Maximum="100" Name="LSlider"/>
+		<Slider Minimum="0" Maximum="100" Name="TSlider"/>
+		<Slider Minimum="0" Maximum="100" Name="RSlider"/>
+		<Slider Minimum="0" Maximum="100" Name="BSlider"/>
+
+		<Button Content="Margin">
+			<Button.Margin>
+				<MultiBinding>
+					<MultiBinding.Bindings>
+						<Binding ElementName="LSlider" Path="Value"/>
+						<Binding ElementName="TSlider" Path="Value"/>
+						<Binding ElementName="RSlider" Path="Value"/>
+						<Binding ElementName="BSlider" Path="Value"/>
+					</MultiBinding.Bindings>
+
+					<MultiBinding.Converter>
+						<local:FourValueToMarginConverter/>
+					</MultiBinding.Converter>
+				</MultiBinding>
+			</Button.Margin>
+		</Button>
+
+		<Separator/>
+	</StackPanel>
+</Window>
