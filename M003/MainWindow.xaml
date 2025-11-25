@@ -1,0 +1,133 @@
+﻿<Window x:Class="M003.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="450" Width="800"
+		Topmost="True"
+		WindowStartupLocation="CenterScreen">
+	<StackPanel Margin="10">
+		<!--Höhe & Breite: Breite wird von StackPanel definiert, Höhe wird von Content definiert-->
+		<Button Content="Hallo" FontSize="40" MinWidth="200"/>
+
+		<!--Margin & Padding: Seitenabstand-->
+		<!--Margin: Außenabstand; Abstand der Komponente selbst zur umliegenden Komponente-->
+		<!--Padding: Innenabstand; Abstand des Inhalts der Komponente zu sich selbst-->
+		<Button Content="Margin2" Margin="5, 10"/>
+		<!--Margin mit 2 Werten: X-Achse, Y-Achse-->
+		<Button Content="Margin4" Margin="5, 10, 20, 50"/>
+		<!--Reihenfolge: Links, Oben, Rechts, Unten-->
+		<Separator/>
+
+		<!--Alignment: Positionierung des Elements-->
+		<!--VerticalAlignment ist bei StackPanel nicht möglich-->
+		<Button Content="Alignment" HorizontalAlignment="Left"/>
+
+		<StackPanel Orientation="Horizontal">
+			<Button Content="Stack" FontSize="40"/>
+			<Button Content="Stack" FontSize="40"/>
+			<Button Content="Stack" FontSize="40"/>
+			<Button Content="Stack" FontSize="40"/>
+		</StackPanel>
+
+		<DockPanel>
+			<!--WICHTIG: Reihenfolge beachten-->
+			<Button DockPanel.Dock="Top" Content="Oben"/>
+			<Button DockPanel.Dock="Bottom" Content="Unten"/>
+			<Button DockPanel.Dock="Left" Content="Links"/>
+			<Button DockPanel.Dock="Right" Content="Rechts"/>
+			<Button Content="Mitte"/>
+		</DockPanel>
+
+		<!--Zeilen- und Spaltensystem-->
+		<Grid>
+			<!--3x3 Grid-->
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<!--Über Grid.Row, Grid.Column werden die Positionen gesetzt-->
+			<Button Grid.Column="0" Grid.Row="0" Content="0, 0"/>
+			<Button Grid.Column="1" Grid.Row="0" Content="0, 1"/>
+			<Button Grid.Column="2" Grid.Row="0" Content="0, 2"/>
+			<Button Grid.Column="0" Grid.Row="1" Content="1, 0"/>
+			<Button Grid.Column="1" Grid.Row="1" Content="1, 1"/>
+			<Button Grid.Column="2" Grid.Row="1" Content="1, 2"/>
+			<Button Grid.Column="0" Grid.Row="2" Content="2, 0"/>
+			<Button Grid.Column="1" Grid.Row="2" Content="2, 1"/>
+			<Button Grid.Column="2" Grid.Row="2" Content="2, 2"/>
+		</Grid>
+
+		<!--Weitere Eigenschaften vom Grid-->
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="100"/>
+				<RowDefinition Height="50"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*"/>
+				<!--*: Alle Zeilen/Spalten sollen die selbe Breite/Höhe haben-->
+				<ColumnDefinition Width="*"/>
+				<!--Alle * Zeilen/Spalten können auch mit einer Zahl angegeben werden (Prozentual)-->
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="0" Grid.Row="0" Content="0, 0"/>
+			<Button Grid.Column="1" Grid.Row="0" Content="0, 1"/>
+			<Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="1, 0"/>
+			<!--ColumnSpan: Komponente darf Spaltenbegrenzungen überschreiten-->
+		</Grid>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="100"/>
+				<ColumnDefinition Width="50"/>
+				<ColumnDefinition Width="Auto"/>
+				<!--Auto: Spalte hat nur die Breite, die sie auch benötigt-->
+				<ColumnDefinition Width="*"/>
+				<!--Die Breite wird vom größten Inhalt bestimmt-->
+			</Grid.ColumnDefinitions>
+			<Button Grid.Column="0" Grid.Row="0" Content="0, 0"/>
+			<Button Grid.Column="1" Grid.Row="0" Content="0, 1"/>
+			<Button Grid.Column="2" Grid.Row="0" Content="0, 2"/>
+			<Button Grid.Column="3" Grid.Row="0" Content="0, 3"/>
+		</Grid>
+
+		<Viewbox Visibility="Collapsed">
+			<Button Content="Hallo"/>
+		</Viewbox>
+
+		<Border BorderBrush="Black" BorderThickness="1">
+			<Border BorderBrush="Aqua" BorderThickness="5">
+				<StackPanel>
+					<Button Content="C1"/>
+					<Button Content="C1"/>
+					<Button Content="C1"/>
+				</StackPanel>
+			</Border>
+		</Border>
+
+		<ScrollViewer VerticalScrollBarVisibility="Auto" Height="100">
+			<StackPanel>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+				<Button Content="Scroll"/>
+			</StackPanel>
+		</ScrollViewer>
+	</StackPanel>
+</Window>
