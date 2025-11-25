@@ -1,8 +1,8 @@
-﻿<Application x:Class="M000.App"
+﻿<Application x:Class="M005.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:M000"
-             StartupUri="ColorPicker.xaml">
+             xmlns:local="clr-namespace:M005"
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
          
     </Application.Resources>
