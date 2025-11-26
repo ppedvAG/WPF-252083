@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 		xmlns:local="clr-namespace:M000"
+		xmlns:valid="clr-namespace:M000.Validation"
         Title="MainWindow" Width="300"
 		Topmost="True"
 		WindowStartupLocation="CenterScreen"
@@ -28,19 +29,42 @@
 		</ObjectDataProvider>
 
 		<ObjectDataProvider x:Key="Odp_ColorsProperties" MethodName="GetProperties" ObjectInstance="{StaticResource Odp_Colors}"/>
+
+		<ControlTemplate x:Key="ErrorTemp">
+			<StackPanel>
+				<Border BorderBrush="Red" BorderThickness="2">
+					<!--AdornedElementPlaceholder: Das gerade Validierte UI-Element-->
+					<AdornedElementPlaceholder Name="AEP"/>
+				</Border>
+				<Popup IsOpen="{Binding ElementName=AEP, Path=AdornedElement.IsMouseOver, Mode=OneWay}" Placement="Mouse">
+					<TextBlock Text="{Binding ElementName=AEP, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+							   Background="White" Foreground="Red" Margin="3"/>
+				</Popup>
+			</StackPanel>
+		</ControlTemplate>
+
+		<valid:ValidationRuleCollection x:Key="NameValidations">
+			<valid:LengthValidation Min="3" Max="15" ValidatesOnTargetUpdated="True"/>
+			<valid:LetterValidation ValidatesOnTargetUpdated="True"/>
+		</valid:ValidationRuleCollection>
+		<valid:DateValidation ValidatesOnTargetUpdated="True" x:Key="DateValidation"/>
+		<valid:ColorValidation ValidatesOnTargetUpdated="True" x:Key="ColorValidation"/>
 	</Window.Resources>
     <StackPanel Margin="10">
 		<UniformGrid Columns="2" Margin="0, 0, 0, 5">
 			<TextBlock Text="Vorname: " VerticalAlignment="Center"/>
-			<TextBox Text="{Binding DiePerson.Vorname}"/>
+			<TextBox Text="{valid:ValidationBinding Binding={Binding DiePerson.Vorname}, Rules={StaticResource NameValidations}}"
+					 Validation.ErrorTemplate="{StaticResource ErrorTemp}"/>
 		</UniformGrid>
 		<UniformGrid Columns="2" Margin="0, 0, 0, 5">
 			<TextBlock Text="Nachname: " VerticalAlignment="Center"/>
-			<TextBox Text="{Binding DiePerson.Nachname}"/>
+			<TextBox Text="{valid:ValidationBinding Binding={Binding DiePerson.Nachname}, Rules={StaticResource NameValidations}}"
+					 Validation.ErrorTemplate="{StaticResource ErrorTemp}"/>
 		</UniformGrid>
 		<UniformGrid Columns="2" Margin="0, 0, 0, 5">
 			<TextBlock Text="Geburtsdatum: " VerticalAlignment="Center"/>
-			<DatePicker SelectedDate="{Binding DiePerson.Gebdat}"/>
+			<DatePicker SelectedDate="{valid:ValidationBinding Binding={Binding DiePerson.Gebdat}, Rule={StaticResource DateValidation}}"
+						Validation.ErrorTemplate="{StaticResource ErrorTemp}"/>
 		</UniformGrid>
 		<UniformGrid Columns="2" Margin="0, 0, 0, 5">
 			<TextBlock Text="Verheiratet: " VerticalAlignment="Center"/>
@@ -70,8 +94,9 @@
 			</ComboBox>-->
 
 			<ComboBox ItemsSource="{local:Colors}"
-					  SelectedValue="{Binding DiePerson.Lieblingsfarbe}"
-					  SelectedValuePath="Color">
+					  SelectedValue="{valid:ValidationBinding Binding={Binding DiePerson.Lieblingsfarbe}, Rule={StaticResource ColorValidation}}"
+					  SelectedValuePath="Color"
+					  Validation.ErrorTemplate="{StaticResource ErrorTemp}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal">
