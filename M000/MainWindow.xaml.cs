@@ -8,6 +8,8 @@ public partial class MainWindow : Window
 
 	public MainWindow()
 	{
+		//DiePerson.Lieblingsfarbe = Colors.Ivory;
+
 		InitializeComponent();
 	}
 
