@@ -1,0 +1,77 @@
+﻿<Window x:Class="M009.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:M009"
+		xmlns:valid="clr-namespace:M009.Validation"
+        Title="MainWindow" Height="450" Width="800"
+		Topmost="True" WindowStartupLocation="CenterScreen"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}">
+	<Window.Resources>
+		<ControlTemplate x:Key="ErrorTemp">
+			<StackPanel>
+				<Border BorderBrush="Red" BorderThickness="2">
+					<!--AdornedElementPlaceholder: Das gerade Validierte UI-Element-->
+					<AdornedElementPlaceholder Name="AEP"/>
+				</Border>
+				<Popup IsOpen="{Binding ElementName=AEP, Path=AdornedElement.IsMouseOver, Mode=OneWay}" Placement="Mouse">
+					<TextBlock Text="{Binding ElementName=AEP, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+							   Background="White" Foreground="Red" Margin="3"/>
+				</Popup>
+			</StackPanel>
+		</ControlTemplate>
+
+		<valid:ValidationRuleCollection x:Key="VRC">
+			<valid:LengthValidation Min="5" Max="20"/>
+			<valid:LetterValidation ValidatesOnTargetUpdated="True"/>
+		</valid:ValidationRuleCollection>
+
+		<Style TargetType="TextBox">
+			<Setter Property="Validation.ErrorTemplate" Value="{StaticResource ErrorTemp}"/>
+		</Style>
+	</Window.Resources>
+    <StackPanel Margin="10">
+		<!--Validierung-->
+		<!--User von ungültig Eingaben abhalten-->
+		<!--Bei einem Binding das Weiterleiten der Daten ans Backend aufhalten (im Fehlerfall)-->
+
+		<!--ValidationRules-->
+		<!--C#-Klassen, welche die Validierungslogik beinhalten-->
+		<!--Werden dann beim Binding hinzugefügt-->
+		
+		<!--2 Regeln: 3-15 Zeichen, nur Buchstaben-->
+		<!--Nachteil: ValidationRules können nur per Langform eingefügt werden (weil das Property ValidationRules Get-only ist)-->
+		<TextBox Validation.ErrorTemplate="{StaticResource ErrorTemp}">
+			<TextBox.Text>
+				<Binding Path="Vorname">
+					<Binding.ValidationRules>
+						<!--Eigene Felder innerhalb der Regel hinzufügen-->
+						<valid:LengthValidation Min="3" Max="15"/>
+
+						<!--ValidatesOnTargetUpdated: Validierung beim Start des Programmes-->
+						<valid:LetterValidation ValidatesOnTargetUpdated="True"/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox.Text>
+		</TextBox>
+		
+		<!--Eigene MarkupExtension für Kurzform-->
+		<TextBox Text="{valid:ValidationBinding Binding={Binding Nachname}, Rules={StaticResource VRC}}"
+				 Validation.ErrorTemplate="{StaticResource ErrorTemp}"/>
+
+		<Button Content="Test" Click="Button_Click"/>
+		
+		<!--................................................................................................-->
+		
+		<!--ValidatesOnExceptions-->
+		<!--Validiert anhand von Exception innerhalb der Backend Variable-->
+		<!--Fehlermeldung in der Exception wird dem User präsentiert-->
+		<TextBox Text="{Binding Alter, ValidatesOnExceptions=True}"/>
+
+		<!--................................................................................................-->
+		
+		<!--ValidationsOnDataError-->
+		<!--Validiert mithilfe eines Indexers im Backend-->
+		<!--Wird über das IDataErrorInfo Interface bereitgestellt-->
+		<TextBox Text="{Binding MittlererName, ValidatesOnDataErrors=True}"/>
+	</StackPanel>
+</Window>

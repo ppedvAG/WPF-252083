@@ -55,7 +55,8 @@
 				<ComboBoxItem Content="Blau" Foreground="Blue"/>
 				<ComboBoxItem Content="Geld" Foreground="Yellow"/>
 			</ComboBox>-->
-			<ComboBox ItemsSource="{Binding Source={StaticResource Odp_ColorsProperties}}"
+			
+			<!--<ComboBox ItemsSource="{Binding Source={StaticResource Odp_ColorsProperties}}"
 					  SelectedValue="{Binding DiePerson.Lieblingsfarbe}"
 					  SelectedValuePath="Name">
 				<ComboBox.ItemTemplate>
@@ -63,6 +64,20 @@
 						<StackPanel Orientation="Horizontal">
 							<Rectangle Fill="{Binding Name}" Stroke="Black" StrokeThickness="1" Width="20" Height="20"/>
 							<TextBlock Text="{Binding Name}" Margin="5, 0"/>
+						</StackPanel>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>-->
+
+			<ComboBox ItemsSource="{local:Colors}"
+					  SelectedValue="{Binding DiePerson.Lieblingsfarbe}"
+					  SelectedValuePath="Color">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<Rectangle Fill="{Binding Brush}" Stroke="Black" Width="20" Height="20"/>
+							<TextBlock Text="{Binding Name}" Margin="5, 0"/>
+							<TextBlock Text="{Binding Color, StringFormat='({0})'}"/>
 						</StackPanel>
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
