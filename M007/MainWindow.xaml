@@ -1,0 +1,110 @@
+﻿<Window x:Class="M007.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:M007"
+        Title="MainWindow" Height="450" Width="300"
+		Topmost="True" WindowStartupLocation="CenterScreen"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}">
+	<Window.Resources>
+		<Style TargetType="Button">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border BorderBrush="Black" BorderThickness="1">
+							<Border BorderBrush="Aqua" BorderThickness="3">
+								<!--ContentPresenter-->
+								<!--Platzhalter für andere Komponente (Content)-->
+								<!--Wird hier verwendet um Text oder Images anzuzeigen-->
+								<!--<ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" Background="{TemplateBinding Background}"/>-->
+
+								<!--TemplateBinding-->
+								<!--Übernimmt von der Komponente selbst den Wert, und setzt diesen in das Template ein-->
+								<!--WICHTIG: Wird nur in ControlTemplates verwendet-->
+								<TextBlock Text="{TemplateBinding Content}"
+										   HorizontalAlignment="Stretch"
+										   TextAlignment="Center"
+										   Background="{TemplateBinding Background}"/>
+							</Border>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<DataTemplate DataType="{x:Type local:Person}">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="{Binding Vorname, StringFormat='\{0} '}"/>
+				<TextBlock Text="{Binding Nachname}"/>
+			</StackPanel>
+		</DataTemplate>
+	</Window.Resources>
+    <StackPanel Margin="10">
+		<!--Templates-->
+		<!--Darstellung von GUI-Komponenten und Daten verändern-->
+		
+		<!--Zwei Typen: ControlTemplate, DataTemplate-->
+		
+		<!--ControlTemplate-->
+		<!--Grundlegendes Neu-Design von einer Komponente-->
+		<Button Content="Hallo Welt" Background="Aqua">
+			<Button.Template>
+				<!--WICHTIG: TargetType nicht vergessen-->
+				<ControlTemplate TargetType="Button">
+					<Border BorderBrush="Black" BorderThickness="1">
+						<Border BorderBrush="Aqua" BorderThickness="3">
+							<!--ContentPresenter-->
+							<!--Platzhalter für andere Komponente (Content)-->
+							<!--Wird hier verwendet um Text oder Images anzuzeigen-->
+							<!--<ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" Background="{TemplateBinding Background}"/>-->
+
+							<!--TemplateBinding-->
+							<!--Übernimmt von der Komponente selbst den Wert, und setzt diesen in das Template ein-->
+							<!--WICHTIG: Wird nur in ControlTemplates verwendet-->
+							<TextBlock Text="{TemplateBinding Content}"
+									   HorizontalAlignment="Stretch"
+									   TextAlignment="Center"
+									   Background="{TemplateBinding Background}"/>
+						</Border>
+					</Border>
+				</ControlTemplate>
+			</Button.Template>
+		</Button>
+		
+		<!--ControlTemplate auf jeden Button in der Anwendung anwenden-->
+		<!--Siehe Window.Resources-->
+		<Button Content="Button 1"/>
+		<Button Content="Button 2"/>
+		<Button Content="Button 3"/>
+		
+		<!--...........................................................................-->
+		
+		<!--DataTemplate-->
+		<!--Definiert das Aussehen von Daten innerhalb einer Listenkomponente-->
+		<ListBox ItemsSource="{Binding Personen}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding Vorname, StringFormat='\{0} '}" VerticalAlignment="Center"/>
+						<TextBlock Text="{Binding Nachname, StringFormat='\{0} '}" VerticalAlignment="Center"/>
+						<Button Content="Person löschen" Style="{x:Null}" Margin="5, 0" Padding="5, 0"/>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		
+		<!--Globales DataTemplate-->
+		<!--Wird mit DataType="{x:Type local:Person}" definiert-->
+		<!--Siehe Window.Resources-->
+		<ComboBox ItemsSource="{Binding Personen}"/>
+		
+		<!--ItemsPanelTemplate-->
+		<!--Definiert den Container einer Listenkomponente (statt StackPanel)-->
+		<ListBox ItemsSource="{Binding Personen}">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<UniformGrid Columns="2"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+		</ListBox>
+	</StackPanel>
+</Window>

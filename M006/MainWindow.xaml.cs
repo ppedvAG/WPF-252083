@@ -1,11 +1,9 @@
 ﻿using System.Windows;
 
-namespace M000;
+namespace M006;
 
 public partial class MainWindow : Window
 {
-	public Person DiePerson { get; set; } = new();
-
 	public MainWindow()
 	{
 		InitializeComponent();
@@ -14,5 +12,10 @@ public partial class MainWindow : Window
 	private void Button_Click(object sender, RoutedEventArgs e)
 	{
 
+	}
+
+	private void Button_Click_1(object sender, RoutedEventArgs e)
+	{
+		Resources["DieZahl"] = (double) Resources["DieZahl"] + 1;
 	}
 }

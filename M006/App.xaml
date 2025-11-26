@@ -1,0 +1,20 @@
+﻿<Application x:Class="M006.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:M006"
+             StartupUri="MainWindow.xaml">
+	<Application.Resources>
+		<!--<ResourceDictionary Source="/Extern.xaml"/>-->
+		
+		<!--MergedDictionaries-->
+		<!--Baut mehrere externe Dictionaries zu einem allg. Dictionary zusammen-->
+		<!--Grund: Key-Duplikate-->
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/Extern.xaml"/>
+				<ResourceDictionary Source="/Resources/Extern2.xaml"/>
+				<ResourceDictionary Source="/PresentationFramework.Classic;component/themes/Classic.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

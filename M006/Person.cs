@@ -2,6 +2,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
+namespace M006;
+
 public class Person : INotifyPropertyChanged
 {
 	private string vorname;
