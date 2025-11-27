@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:M010"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+		Topmost="True">
     <StackPanel>
 		<!--Trigger-->
 		<!--Style mit Bedingung-->
@@ -96,6 +97,25 @@
 							</MultiDataTrigger.Conditions>
 							<Setter Property="IsEnabled" Value="True"/>
 						</MultiDataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Button.Style>
+		</Button>
+
+		<!--Trigger mit Bereich-->
+		<ProgressBar Minimum="0" Maximum="100" Value="70" Height="20" Name="Progress"/>
+		<Button Content="Hallo">
+			<Button.Resources>
+				<local:PercentConverter Minimum="80" x:Key="Pct"/>
+			</Button.Resources>
+			
+			<Button.Style>
+				<Style TargetType="Button">
+					<Setter Property="Visibility" Value="Collapsed"/>
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding ElementName=Progress, Path=Value, Converter={StaticResource Pct}}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
 					</Style.Triggers>
 				</Style>
 			</Button.Style>
