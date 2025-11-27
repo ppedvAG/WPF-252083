@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace M000;
+namespace M011;
 
 public partial class ColorPicker : Window
 {

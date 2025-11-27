@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="M011.ColorPickerUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="clr-namespace:M011"
+			 Name="Self">
+	<UserControl.Resources>
+		<local:ColorToBrushConverter x:Key="CBC"/>
+	</UserControl.Resources>
+	<StackPanel Margin="10">
+		<local:ColorSlider Text="R: " TextColor="Red" SliderValue="{Binding ElementName=Self, Path=R, Mode=TwoWay}"/>
+		<local:ColorSlider Text="G: " TextColor="Green" SliderValue="{Binding ElementName=Self, Path=G, Mode=TwoWay}"/>
+		<local:ColorSlider Text="B: " TextColor="Blue" SliderValue="{Binding ElementName=Self, Path=B, Mode=TwoWay}"/>
+		<local:ColorSlider Text="A: " TextColor="Black" SliderValue="{Binding ElementName=Self, Path=A, Mode=TwoWay}"/>
+
+		<TextBlock Text="{Binding ElementName=ColorRect, Path=Fill, StringFormat='Picked Color: {0}'}" TextAlignment="Center"/>
+
+		<!--Fill fällt hier weg, weil das MultiBinding keine Bindung ins Backend ermöglicht-->
+		<Rectangle Fill="{Binding ElementName=Self, Path=PickedColor, Mode=TwoWay, Converter={StaticResource CBC}}"
+				   Name="ColorRect" Stroke="Black" StrokeThickness="2" Width="150" Height="150"/>
+	</StackPanel>
+</UserControl>

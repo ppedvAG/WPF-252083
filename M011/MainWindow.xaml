@@ -1,0 +1,22 @@
+﻿<Window x:Class="M011.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:M011"
+        Title="MainWindow" Height="450" Width="800"
+		Topmost="True" WindowStartupLocation="CenterScreen"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <StackPanel>
+		<!--UserControls-->
+		<!--Eigene Controls designen-->
+		<!--Oder ein Page-basierter Aufbau der Anwendung-->
+		
+		<!--Beispiel: ColorPicker als UserControl definieren-->
+		<!--1. ColorPicker + Converter herüberkopieren-->
+		<!--2. Slider + TextBox zu einem UC konvertieren-->
+		<!--3. ColorPicker Window zu UC konvertieren-->
+		<!--4. Gewählte Farbe ins Backend weiterleiten-->
+		<!--5. Standardfarbe an die einzelnen Slider aufteilen-->
+		<local:ColorPickerUC PickedColor="{Binding PickedColor, Mode=TwoWay}"/>
+		<Button Click="Button_Click" Content="Debug"/>
+	</StackPanel>
+</Window>
