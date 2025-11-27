@@ -1,0 +1,50 @@
+﻿<Window x:Class="M012.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:M012"
+        Title="MainWindow" Height="450" Width="800"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}"
+		WindowStartupLocation="CenterScreen" Topmost="True">
+	<DataGrid ItemsSource="{Binding Personen}"
+			  AutoGenerateColumns="False"
+			  
+			  AlternatingRowBackground="LightGray"
+			  AlternationCount="5"
+			  
+			  CanUserReorderColumns="False"
+			  CanUserDeleteRows="False"
+			  CanUserAddRows="False"
+			  CanUserResizeRows="False"
+			  CanUserSortColumns="True"
+			  CanUserResizeColumns="True"
+			  
+			  SelectionMode="Single"
+			  
+			  EnableRowVirtualization="True"
+			  VirtualizingPanel.CacheLengthUnit="Item"
+			  VirtualizingPanel.CacheLength="50"
+			  VirtualizingPanel.VirtualizationMode="Recycling">
+		<!--Eigene Spalten definieren-->
+		<DataGrid.Resources>
+			<local:HobbiesUnpackConverter x:Key="HUC"/>
+		</DataGrid.Resources>
+		<DataGrid.Columns>
+			<DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+			<DataGridTextColumn Header="Vorname" Binding="{Binding Vorname}"/>
+			<DataGridTextColumn Header="Nachname" Binding="{Binding Nachname}"/>
+			<DataGridTextColumn Header="Geburtsdatum" Binding="{Binding Geburtsdatum, StringFormat='dddd, dd. MMMM yyyy'}"/>
+			<DataGridTextColumn Header="Alter" Binding="{Binding Alter}"/>
+			<DataGridTextColumn Header="Jobtitel" Binding="{Binding Job.Titel}"/>
+			<DataGridTextColumn Header="Gehalt" Binding="{Binding Job.Gehalt, StringFormat='\{0:F2}€'}"/>
+			<DataGridTextColumn Header="Einstellungsdatum" Binding="{Binding Job.Einstellungsdatum, StringFormat='dd.MM.yyyy'}"/>
+			<DataGridTextColumn Header="Hobbies" Binding="{Binding Hobbies, Converter={StaticResource HUC}}"/>
+			<DataGridTemplateColumn Header="Buttons">
+				<DataGridTemplateColumn.CellTemplate>
+					<DataTemplate>
+						<Button Content="Person löschen" Margin="-2" Click="Button_Click"/>
+					</DataTemplate>
+				</DataGridTemplateColumn.CellTemplate>
+			</DataGridTemplateColumn>
+		</DataGrid.Columns>
+    </DataGrid>
+</Window>
