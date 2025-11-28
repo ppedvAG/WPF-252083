@@ -1,0 +1,41 @@
+﻿<Window x:Class="M013.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:M013"
+        Title="MainWindow" Height="450" Width="800"
+		WindowStartupLocation="CenterScreen" Topmost="True"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <StackPanel>
+		<!--Commands-->
+		<!--Eigene Klasse mit Logik-->
+		<!--Ersetzt bei MVVM die Events-->
+		<Button Content="Hallo Welt"
+				Command="{Binding Exit}"/>
+
+		<!--CommandParameter-->
+		<TextBlock Text="{Binding Zaehler.Zaehler}"/>
+		<Button Content="Zähler++"
+				Command="{Binding Counter}"
+				CommandParameter="{Binding Zaehler}"/>
+
+		<!--CustomCommand-->
+		<TextBlock Text="{Binding Zaehler.Zaehler}"/>
+		<Button Content="Zähler++"
+				Command="{Binding CustomCounter}"
+				CommandParameter="{Binding Zaehler}"/>
+		
+		<!--EventToCommand-->
+		<TextBlock Name="Output"/>
+		<TextBox Text="{Binding Input}">
+			<b:Interaction.Triggers>
+				<b:EventTrigger EventName="KeyDown">
+					<b:InvokeCommandAction Command="{Binding EnterCommand}"
+										   CommandParameter="{Binding ElementName=Output}"
+										   PassEventArgsToCommand="True"
+										   EventArgsParameterPath="e"/>
+				</b:EventTrigger>
+			</b:Interaction.Triggers>
+		</TextBox>
+	</StackPanel>
+</Window>
